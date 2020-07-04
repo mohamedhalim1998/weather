@@ -16,13 +16,13 @@ data class City(
 )
 
 data class DayForecast(
+    @SerializedName("dt") val timeStamp: Long,
     val main: Main,
     val weather: List<Weather>,
     val clouds: Clouds,
     val wind: Wind
 ) {
     data class Main(
-        @SerializedName("dt") val id: Long,
         @SerializedName("temp") val temperature: Float,
         @SerializedName("feels_like") val feelsLike: Float,
         val min: Float,

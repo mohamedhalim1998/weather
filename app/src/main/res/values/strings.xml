@@ -1,5 +1,6 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Weather</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="temperature"><xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
+    <string name="feels_like">Feels Like : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
+
 </resources>

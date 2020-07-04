@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 
 interface ApiService {
-    @GET("data/2.5/forecast?id=360630&appid=$API_KEY")
+    @GET("data/2.5/forecast?id=360630&units=metric&appid=$API_KEY")
     fun getFiveDaysWeather() : Single<WeatherResponse>
 }
 
