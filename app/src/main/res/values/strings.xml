@@ -2,5 +2,7 @@
     <string name="app_name">Weather</string>
     <string name="temperature"><xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
     <string name="feels_like">Feels Like : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
+    <string name="min">Min : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
+    <string name="max">Max : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
 
 </resources>

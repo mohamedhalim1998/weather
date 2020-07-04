@@ -16,7 +16,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             app:cardBackgroundColor="@color/cardview_dark_background"
             app:cardCornerRadius="16dp">
@@ -38,7 +38,7 @@
                     android:layout_gravity="center_vertical"
                     android:textColor="#fff"
                     android:textSize="40sp"
-                    app:setTemperature="@{forecast.main.temperature}"
+                    app:setTemperature="@{forecast.temperatures.day}"
                     tools:text="@string/temperature" />
 
                 <LinearLayout
@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="#fff"
-                        app:setTemperatureFeelsLike="@{forecast.main.feelsLike}"
+                        app:setTemperatureFeelsLike="@{forecast.feelsLike.day}"
                         tools:text="@string/feels_like" />
 
                     <TextView
@@ -61,8 +61,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textColor="#fff"
-                        tools:text="4/7/2020 10:25 AM"
-                        app:setDate="@{forecast.timeStamp}"/>
+                        app:setTemperatureMin="@{forecast.temperatures.min}"
+                        tools:text="@string/min" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#fff"
+                        app:setTemperatureMax="@{forecast.temperatures.max}"
+                        tools:text="@string/max" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#fff"
+                        app:setDate="@{forecast.timeStamp}"
+                        tools:text="4/7/2020 10:25 AM" />
 
                 </LinearLayout>
             </LinearLayout>
