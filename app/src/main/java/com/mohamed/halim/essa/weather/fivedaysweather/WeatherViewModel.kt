@@ -1,10 +1,18 @@
 package com.mohamed.halim.essa.weather.fivedaysweather
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.mohamed.halim.essa.weather.data.remote.RemoteDataSource
+import com.mohamed.halim.essa.weather.data.Repository
 
-class WeatherViewModel(source: RemoteDataSource) : ViewModel() {
-    val weatherDate by lazy {
-        source.getWeatherData()
+class WeatherViewModel(repository: Repository) : ViewModel() {
+    val weatherDate = repository.getWeatherData()
+    private val _navigateToDetails = MutableLiveData<Long>()
+    val navigateToDetails: LiveData<Long>
+        get() = _navigateToDetails
+
+    fun onDayClick(date: Long) {
+        _navigateToDetails.value = date
     }
+
 }

@@ -10,14 +10,15 @@ import com.mohamed.halim.essa.weather.databinding.ListItemBinding
 import timber.log.Timber
 
 
-class WeatherAdapter : ListAdapter<DayForecast, WeatherViewHolder>(DayForecastDiffCallBacks()) {
+class WeatherAdapter(val dayClickListener: DayClickListener) :
+    ListAdapter<DayForecast, WeatherViewHolder>(DayForecastDiffCallBacks()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
         return WeatherViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         Timber.d(getItem(position).timeStamp.toString())
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), dayClickListener)
     }
 
 }
@@ -35,8 +36,13 @@ class DayForecastDiffCallBacks : DiffUtil.ItemCallback<DayForecast>() {
 
 class WeatherViewHolder private constructor(val binding: ListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(forecast: DayForecast) {
+    fun bind(
+        forecast: DayForecast,
+        dayClickListener: DayClickListener
+    ) {
         binding.forecast = forecast
+        binding.clickListener = dayClickListener
+        binding.executePendingBindings()
     }
 
     companion object {
@@ -47,4 +53,11 @@ class WeatherViewHolder private constructor(val binding: ListItemBinding) :
         }
     }
 
+}
+
+class DayClickListener(val clickListener: (TimeStamp: Long) -> Unit) {
+    fun onClick(forecast: DayForecast) {
+        Timber.d(forecast.toString())
+        clickListener(forecast.timeStamp)
+    }
 }

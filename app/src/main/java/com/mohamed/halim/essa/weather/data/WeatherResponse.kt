@@ -1,6 +1,9 @@
 package com.mohamed.halim.essa.weather.data
 
+import androidx.room.*
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.mohamed.halim.essa.weather.utils.RoomTypeConverters
 
 data class WeatherResponse(
     @SerializedName("list") val daysForecast: List<DayForecast>,
@@ -13,15 +16,16 @@ data class WeatherResponse(
     )
 }
 
+@Entity(tableName = "day_forecast")
 data class DayForecast(
     @SerializedName("clouds")
     val clouds: Int,
     @SerializedName("deg")
     val deg: Int,
     @SerializedName("dt")
-    val timeStamp: Long,
+    @PrimaryKey val timeStamp: Long,
     @SerializedName("feels_like")
-    val feelsLike: FeelsLike,
+    @Embedded val feelsLike: FeelsLike,
     @SerializedName("humidity")
     val humidity: Int,
     @SerializedName("pressure")
@@ -33,20 +37,21 @@ data class DayForecast(
     @SerializedName("sunset")
     val sunset: Long,
     @SerializedName("temp")
-    val temperatures: Temperatures,
+    @Embedded val temperatures: Temperatures,
     @SerializedName("weather")
+    @TypeConverters(RoomTypeConverters::class)
     val weather: List<Weather>
 )
 
 data class FeelsLike(
     @SerializedName("day")
-    val day: Float,
+    @ColumnInfo(name = "feels_like_day") val day: Float,
     @SerializedName("eve")
-    val eve: Float,
+    @ColumnInfo(name = "feels_like_eve") val eve: Float,
     @SerializedName("morn")
-    val morn: Float,
+    @ColumnInfo(name = "feels_like_morn") val morn: Float,
     @SerializedName("night")
-    val night: Float
+    @ColumnInfo(name = "feels_like_night") val night: Float
 )
 
 data class Temperatures(

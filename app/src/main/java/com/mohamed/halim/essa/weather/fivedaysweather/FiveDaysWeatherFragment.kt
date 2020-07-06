@@ -6,61 +6,57 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohamed.halim.essa.weather.R
 import com.mohamed.halim.essa.weather.data.DayForecast
+import com.mohamed.halim.essa.weather.data.Repository
+import com.mohamed.halim.essa.weather.data.local.ForecastDatabase
+import com.mohamed.halim.essa.weather.data.local.LocalDataSource
 import com.mohamed.halim.essa.weather.data.remote.RemoteDataSource
 import com.mohamed.halim.essa.weather.databinding.FiveDaysWeatherBinding
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.core.SingleObserver
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlinx.android.synthetic.main.five_days_weather.*
+import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
+
 
 class FiveDaysWeatherFragment : Fragment() {
     lateinit var binding: FiveDaysWeatherBinding
     lateinit var adapter: WeatherAdapter
     lateinit var viewModel: WeatherViewModel
-    lateinit var disposables : CompositeDisposable
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.five_days_weather, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.five_days_weather, container, false)
         binding.lifecycleOwner = this
-        disposables = CompositeDisposable()
-        val factory = WeatherViewModelFactory(RemoteDataSource())
+        val database = ForecastDatabase.getInstance(requireContext())
+        val repository = Repository(LocalDataSource(database.weatherDao), RemoteDataSource())
+        val factory = WeatherViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(WeatherViewModel::class.java)
         initRecycleView()
+        setupObservers()
         return binding.root
     }
 
     private fun initRecycleView() {
-        adapter = WeatherAdapter()
-        viewModel.weatherDate.subscribe(object : SingleObserver<List<DayForecast>> {
-            override fun onSuccess(t: List<DayForecast>?) {
-                Timber.d("get the list" + t?.size)
-                adapter.submitList(t)
-            }
-
-            override fun onSubscribe(d: Disposable?) {
-                disposables.add(d)
-            }
-
-            override fun onError(e: Throwable?) {
-                Timber.e(e)
-            }
-
+        adapter = WeatherAdapter(DayClickListener {
         })
         val manager = LinearLayoutManager(requireContext())
         binding.weatherList.adapter = adapter
         binding.weatherList.layoutManager = manager
+    }
+
+    private fun setupObservers() {
+        viewModel.weatherDate.observe(viewLifecycleOwner, Observer {
+            Timber.d(it.toString())
+            adapter.submitList(it)
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

@@ -8,11 +8,15 @@
         <variable
             name="forecast"
             type="com.mohamed.halim.essa.weather.data.DayForecast" />
+        <variable
+            name="clickListener"
+            type="com.mohamed.halim.essa.weather.fivedaysweather.DayClickListener" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(forecast)}">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

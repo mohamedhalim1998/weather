@@ -1,8 +1,10 @@
 package com.mohamed.halim.essa.weather.data
 
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.Single
+
 
 interface DataSource {
-    fun getWeatherData() : Single<List<DayForecast>>
+    fun getWeatherData() : Flowable<List<DayForecast>>
 }
