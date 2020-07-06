@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            app:cardBackgroundColor="@color/cardview_dark_background"
             app:cardCornerRadius="16dp">
 
             <LinearLayout
@@ -43,7 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textColor="#fff"
+                     tools:textColor="#fff"
                     android:textSize="40sp"
                     app:temperature="@{forecast.temperatures.day}"
                     tools:text="@string/temperature" />
@@ -59,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#fff"
+                         tools:textColor="#fff"
                         app:temperatureFeelsLike="@{forecast.feelsLike.day}"
                         tools:text="@string/feels_like" />
 
@@ -67,7 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#fff"
+                         tools:textColor="#fff"
                         app:temperatureMin="@{forecast.temperatures.min}"
                         tools:text="@string/min" />
 
@@ -75,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#fff"
+                         tools:textColor="#fff"
                         app:temperatureMax="@{forecast.temperatures.max}"
                         tools:text="@string/max" />
 
@@ -83,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:textColor="#fff"
+                         tools:textColor="#fff"
                         app:date="@{forecast.timeStamp}"
                         tools:text="4/7/2020" />
 

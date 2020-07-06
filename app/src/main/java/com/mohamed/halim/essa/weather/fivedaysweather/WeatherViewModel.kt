@@ -14,5 +14,8 @@ class WeatherViewModel(repository: Repository) : ViewModel() {
     fun onDayClick(date: Long) {
         _navigateToDetails.value = date
     }
+    fun doneNavigating() {
+        _navigateToDetails.value = null
+    }
 
 }

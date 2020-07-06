@@ -53,3 +53,25 @@ fun setConditionIcon(imageView: ImageView, condition: Int) {
         )
     )
 }
+
+@BindingAdapter("numberText")
+fun numberText(textView: TextView, v: Int) {
+    textView.text = v.toString()
+}
+
+@BindingAdapter("numberText")
+fun numberText(textView: TextView, v: Float) {
+    textView.text = v.toString()
+}
+
+@BindingAdapter("timeText")
+fun timeText(textView: TextView, time: Long) {
+    val dateFormat = SimpleDateFormat("h:mm a")
+    val date = Date(time*1000)
+    textView.text = dateFormat.format(date)
+}
+
+@BindingAdapter("percentText")
+fun percentText(textView: TextView, percent: Int) {
+    textView.text = "$percent %"
+}

@@ -43,6 +43,7 @@ class FiveDaysWeatherFragment : Fragment() {
 
     private fun initRecycleView() {
         adapter = WeatherAdapter(DayClickListener {
+            viewModel.onDayClick(it)
         })
         val manager = LinearLayoutManager(requireContext())
         binding.weatherList.adapter = adapter
@@ -54,9 +55,22 @@ class FiveDaysWeatherFragment : Fragment() {
             Timber.d(it.toString())
             adapter.submitList(it)
         })
+
+        viewModel.navigateToDetails.observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                findNavController().navigate(
+                    FiveDaysWeatherFragmentDirections.actionFiveDaysWeatherToTodayWeatherFragment(
+                        it
+                    )
+                )
+                viewModel.doneNavigating()
+            }
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
     }
+
+
 }

@@ -30,4 +30,10 @@ class Repository(val localDataSource: LocalDataSource, val remoteDataSource: Rem
         )
         return data
     }
+
+    fun getDayForecast(date: Long): LiveData<DayForecast> {
+        return LiveDataReactiveStreams.fromPublisher(
+            localDataSource.getDayForecast(date).subscribeOn(Schedulers.io()).toFlowable()
+        )
+    }
 }

@@ -8,5 +8,18 @@
         android:id="@+id/fiveDaysWeather"
         android:name="com.mohamed.halim.essa.weather.fivedaysweather.FiveDaysWeatherFragment"
         android:label="fragment_week_weather"
-        tools:layout="@layout/five_days_weather" />
+        tools:layout="@layout/five_days_weather" >
+        <action
+            android:id="@+id/action_fiveDaysWeather_to_todayWeatherFragment"
+            app:destination="@id/todayWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/todayWeatherFragment"
+        android:name="com.mohamed.halim.essa.weather.todayweather.TodayWeatherFragment"
+        android:label="fragment_today_weather"
+        tools:layout="@layout/fragment_today_weather" >
+        <argument
+            android:name="date"
+            app:argType="long" />
+    </fragment>
 </navigation>

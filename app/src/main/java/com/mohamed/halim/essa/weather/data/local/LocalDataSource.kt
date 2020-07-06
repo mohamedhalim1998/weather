@@ -9,13 +9,13 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 
-class LocalDataSource(val weatherDao: WeatherDao) : DataSource{
+class LocalDataSource(val weatherDao: WeatherDao) : DataSource {
     override fun getWeatherData(): Flowable<List<DayForecast>> {
         return weatherDao.getForecast()
     }
 
 
-    fun cacheData(daysForecast  : List<DayForecast>){
+    fun cacheData(daysForecast: List<DayForecast>) {
         Timber.d(daysForecast.toString())
         Observable.fromCallable {
             weatherDao.insertAll(daysForecast)
@@ -28,6 +28,10 @@ class LocalDataSource(val weatherDao: WeatherDao) : DataSource{
             weatherDao.clear()
         }.subscribeOn(Schedulers.io())
             .subscribe()
+    }
+
+    fun getDayForecast(date: Long): Single<DayForecast> {
+        return weatherDao.getDayForecast(date)
     }
 
 }
