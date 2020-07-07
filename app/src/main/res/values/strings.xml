@@ -4,5 +4,21 @@
     <string name="feels_like">Feels Like : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
     <string name="min">Min : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
     <string name="max">Max : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 C</string>
+    <string name="temperature_f"><xliff:g example="25" id="temp">%d</xliff:g>\u00B0 F</string>
+    <string name="feels_like_f">Feels Like : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 F</string>
+    <string name="min_f">Min : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 F</string>
+    <string name="max_f">Max : <xliff:g example="25" id="temp">%d</xliff:g>\u00B0 F</string>
+    <string name="pref_city_title">City</string>
+    <string name="pref_city_key">cityKey</string>
+    <string name="pref_unit_title">unit</string>
+    <string name="pref_unit_key">unit-key</string>
 
+    <string-array name="pref_unit_entries">
+        <item>C</item>
+        <item>F</item>
+    </string-array>
+    <string-array name="pref_unit_entries_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
 </resources>

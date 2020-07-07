@@ -2,6 +2,7 @@ package com.mohamed.halim.essa.weather.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
+import androidx.lifecycle.MutableLiveData
 import com.mohamed.halim.essa.weather.data.local.LocalDataSource
 import com.mohamed.halim.essa.weather.data.remote.RemoteDataSource
 import io.reactivex.Observer
@@ -35,5 +36,31 @@ class Repository(val localDataSource: LocalDataSource, val remoteDataSource: Rem
         return LiveDataReactiveStreams.fromPublisher(
             localDataSource.getDayForecast(date).subscribeOn(Schedulers.io()).toFlowable()
         )
+    }
+
+    fun changeCity(city: String) {
+        remoteDataSource.city = city
+        localDataSource.clearData()
+        remoteDataSource.getWeatherData().onErrorReturn {
+            emptyList()
+        }.doOnNext {
+            if (it.isNotEmpty()) {
+                localDataSource.clearData()
+                localDataSource.cacheData(it)
+            }
+        }.subscribe()
+    }
+
+    fun changeUnit(unit : String) {
+        remoteDataSource.unit = unit
+        localDataSource.clearData()
+        remoteDataSource.getWeatherData().onErrorReturn {
+            emptyList()
+        }.doOnNext {
+            if (it.isNotEmpty()) {
+                localDataSource.clearData()
+                localDataSource.cacheData(it)
+            }
+        }.subscribe()
     }
 }

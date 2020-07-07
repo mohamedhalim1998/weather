@@ -3,6 +3,7 @@ package com.mohamed.halim.essa.weather.utils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.preference.PreferenceManager
 import com.mohamed.halim.essa.weather.R
 import timber.log.Timber
 import java.text.SimpleDateFormat
@@ -10,12 +11,28 @@ import java.util.*
 
 @BindingAdapter("temperature")
 fun setTemperature(textView: TextView, temp: Float) {
-    textView.text = textView.context.getString(R.string.temperature, temp.toInt())
+    val context = textView.context
+    val unit = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(context.getString(R.string.pref_unit_key), "metric")
+    if (unit == "imperial") {
+        textView.text = textView.context.getString(R.string.temperature_f, temp.toInt())
+    } else {
+        textView.text = textView.context.getString(R.string.temperature, temp.toInt())
+
+    }
 }
 
 @BindingAdapter("temperatureFeelsLike")
 fun setTemperatureFeelsLike(textView: TextView, temp: Float) {
-    textView.text = textView.context.getString(R.string.feels_like, temp.toInt())
+    val context = textView.context
+    val unit = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(context.getString(R.string.pref_unit_key), "metric")
+    if (unit == "imperial") {
+        textView.text = textView.context.getString(R.string.feels_like_f, temp.toInt())
+    } else {
+        textView.text = textView.context.getString(R.string.feels_like, temp.toInt())
+
+    }
 }
 
 @BindingAdapter("date")
@@ -27,12 +44,28 @@ fun setDate(textView: TextView, timeStamp: Long) {
 
 @BindingAdapter("temperatureMin")
 fun setTemperatureMin(textView: TextView, temp: Float) {
-    textView.text = textView.context.getString(R.string.min, temp.toInt())
+    val context = textView.context
+    val unit = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(context.getString(R.string.pref_unit_key), "metric")
+    if (unit == "imperial") {
+        textView.text = textView.context.getString(R.string.min_f, temp.toInt())
+    } else {
+        textView.text = textView.context.getString(R.string.min, temp.toInt())
+
+    }
 }
 
 @BindingAdapter("temperatureMax")
 fun setTemperatureMax(textView: TextView, temp: Float) {
-    textView.text = textView.context.getString(R.string.max, temp.toInt())
+    val context = textView.context
+    val unit = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString(context.getString(R.string.pref_unit_key), "metric")
+    if (unit == "imperial") {
+        textView.text = textView.context.getString(R.string.max_f, temp.toInt())
+    } else {
+        textView.text = textView.context.getString(R.string.max, temp.toInt())
+
+    }
 }
 
 @BindingAdapter("conditionIcon")
@@ -67,7 +100,7 @@ fun numberText(textView: TextView, v: Float) {
 @BindingAdapter("timeText")
 fun timeText(textView: TextView, time: Long) {
     val dateFormat = SimpleDateFormat("h:mm a")
-    val date = Date(time*1000)
+    val date = Date(time * 1000)
     textView.text = dateFormat.format(date)
 }
 

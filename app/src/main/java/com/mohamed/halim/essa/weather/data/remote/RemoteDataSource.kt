@@ -16,9 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 
-class RemoteDataSource : DataSource {
+class RemoteDataSource(var city: String,var unit : String) : DataSource {
     private val BASE_URL = "http://api.openweathermap.org/"
-
     private val apiService: ApiService by lazy {
         val gson = GsonBuilder().create()
         val retrofit = Retrofit.Builder()
@@ -30,7 +29,7 @@ class RemoteDataSource : DataSource {
     }
 
     override fun getWeatherData(): Flowable<List<DayForecast>> {
-        return apiService.getFiveDaysWeather()
+        return apiService.getFiveDaysWeather(city, unit)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { weatherResponse ->
