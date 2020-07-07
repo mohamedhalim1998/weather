@@ -16,14 +16,7 @@ import timber.log.Timber
 
 class Repository(val localDataSource: LocalDataSource, val remoteDataSource: RemoteDataSource) {
     fun getWeatherData(): LiveData<List<DayForecast>> {
-        remoteDataSource.getWeatherData().onErrorReturn {
-            emptyList()
-        }.doOnNext {
-            if (it.isNotEmpty()) {
-                localDataSource.clearData()
-                localDataSource.cacheData(it)
-            }
-        }.subscribe()
+        refreshData()
 
         val data: LiveData<List<DayForecast>> = LiveDataReactiveStreams.fromPublisher(
             localDataSource.getWeatherData().subscribeOn(Schedulers.io())
@@ -41,23 +34,21 @@ class Repository(val localDataSource: LocalDataSource, val remoteDataSource: Rem
     fun changeCity(city: String) {
         remoteDataSource.city = city
         localDataSource.clearData()
-        remoteDataSource.getWeatherData().onErrorReturn {
-            emptyList()
-        }.doOnNext {
-            if (it.isNotEmpty()) {
-                localDataSource.clearData()
-                localDataSource.cacheData(it)
-            }
-        }.subscribe()
+        refreshData()
     }
 
-    fun changeUnit(unit : String) {
+    fun changeUnit(unit: String) {
         remoteDataSource.unit = unit
         localDataSource.clearData()
+        refreshData()
+    }
+
+    fun refreshData() {
         remoteDataSource.getWeatherData().onErrorReturn {
             emptyList()
         }.doOnNext {
             if (it.isNotEmpty()) {
+
                 localDataSource.clearData()
                 localDataSource.cacheData(it)
             }
